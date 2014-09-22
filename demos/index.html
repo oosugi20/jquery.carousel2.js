@@ -6,17 +6,72 @@
 <script src="../lib/jquery.js"></script>
 <script src="../dist/jquery.carousel.js"></script>
 <style>
-[data-carousel] {
+.js-carousel {
 }
+	.js-carousel-frame {
+		width: 300px;
+		overflow: hidden;
+	}
+		.js-carousel-items {
+			margin: 0 0 0 50px;
+			width: 9999px;
+		}
+		.js-carousel-items:after {
+			content: "."; display: block; clear: both; height: 0; visibility: hidden; font-size: 0;
+		}
+			.js-carousel-item {
+				float: left;
+			}
+
+	.js-carousel-pointer {
+	}
+		.js-carousel-point {
+			float: left;
+			width: 20px;
+			height: 20px;
+			background: #ccc;
+			margin: 0 2px;
+		}
+		.js-carousel-point.current {
+			background: #000;
+		}
 </style>
 <script>
 $(function () {
-	$('[data-carousel]').carousel();
+	$('.js-carousel').carousel().on({
+		'carousel:beforemove': function () {
+			console.log('carouse:beforemove');
+			console.log($(this).data('carousel').point);
+		},
+		'carousel:aftermove': function () {
+			console.log('carouse:aftermove');
+		}
+	});
 });
 </script>
 </head>
 
 <body>
-<div data-carousel></div>
+<div class="js-carousel">
+	<div class="js-carousel-frame">
+		<div class="js-carousel-items">
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/f00?text=1" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/f0f?text=2" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/ff0?text=3" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/0ff?text=4" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/0f0?text=5" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/00f?text=6" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/3f9?text=7" width="200" height="120" alt="" /></div>
+			<div class="js-carousel-item"><img src="http://dummyimage.com/200x120/93f?text=8" width="200" height="120" alt="" /></div>
+		</div>
+	</div>
+
+	<div class="js-carousel-prev">prev</div>
+	<div class="js-carousel-next">next</div>
+
+	<div class="js-carousel-pointer">
+		<div class="js-carousel-point"></div>
+	</div>
+</div>
 </body>
 </html>
