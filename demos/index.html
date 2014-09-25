@@ -41,10 +41,12 @@ $(function () {
 	$('.js-carousel').carousel().on({
 		'carousel:beforemove': function () {
 			console.log('carouse:beforemove');
-			console.log($(this).data('carousel').point);
 		},
 		'carousel:aftermove': function () {
 			console.log('carouse:aftermove');
+		},
+		'carousel:startplay': function () {
+			console.log('carousel:startplay');
 		}
 	});
 });
