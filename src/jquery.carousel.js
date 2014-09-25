@@ -227,14 +227,16 @@ Module = function (element, options) {
 	/**
 	 * _onPrevClick
 	 */
-	fn._onPrevClick = function () {
+	fn._onPrevClick = function (event) {
+		event.preventDefault();
 		this.toPrev();
 	};
 
 	/**
 	 * _onNextClick
 	 */
-	fn._onNextClick = function () {
+	fn._onNextClick = function (event) {
+		event.preventDefault();
 		this.toNext();
 	};
 
