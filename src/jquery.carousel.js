@@ -5,6 +5,8 @@ var MODULE_NAME = 'Carousel';
 var PLUGIN_NAME = 'carousel';
 var Module;
 
+var $window = $(window);
+
 
 /**
  * Module
@@ -25,9 +27,11 @@ Module = function (element, options) {
 
 
 		pointer: true,
+		autoPlay: true,
 
 		distance: null,
-		duration: 300//,
+		duration: 300,
+		interval: 8000
 		//stopEndPoint: true,
 		//loop: true
 	}, options);
@@ -38,6 +42,8 @@ Module = function (element, options) {
 	 * init
 	 */
 	fn.init = function () {
+		var _this = this;
+
 		this._prepareElms();
 		this._eventify();
 
@@ -56,6 +62,14 @@ Module = function (element, options) {
 		var left = this.distance * -1;
 		this.$items.css({ left: left });
 		this.$item = this.$items.find(this.options.item_selector);
+
+
+
+		this._playTimer = null;
+
+		if (this.options.autoPlay) {
+			$window.on('load', $.proxy(this.startPlay, this));
+		}
 	};
 
 	/**
@@ -196,6 +210,38 @@ Module = function (element, options) {
 			}
 		});
 	};
+
+
+
+	/**
+	 * play
+	 */
+	fn.play = function () {
+		var _this = this;
+		var interval = this.options.interval;
+
+		if (this._playTimer) {
+			clearTimeout(this._playTimer);
+			this._playTimer = null;
+		}
+
+		this._playTimer = setTimeout($.proxy(this.toNext, this), interval);
+	};
+
+	/**
+	 * startPlay
+	 */
+	fn.startPlay = function () {
+		this.play();
+		this.$el.on('carousel:aftermove', $.proxy(this.play, this));
+		this.$el.trigger('carousel:startplay');
+	};
+
+
+	// [TODO] stopPlay()
+	// [TODO] reversePlay()
+
+
 
 	/**
 	 * hasPrev
